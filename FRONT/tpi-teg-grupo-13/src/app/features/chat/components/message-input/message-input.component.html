@@ -1,0 +1,38 @@
+<form class="message-form" (ngSubmit)="onSubmit($event)">
+  <div class="input-container">
+    <input
+      #messageInput
+      type="text"
+      class="message-input"
+      [(ngModel)]="messageText"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [maxlength]="maxLength + 50"
+      (keypress)="onKeyPress($event)"
+      name="messageText"
+      autocomplete="off">
+
+    <button
+      type="submit"
+      class="send-button"
+      [disabled]="!canSendMessage() || isOverLimit()"
+      [class.pulse]="canSendMessage() && !isOverLimit()">
+
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="input-footer" *ngIf="messageText.length > 0">
+    <span class="char-counter"
+          [class.warning]="isNearLimit()"
+          [class.error]="isOverLimit()">
+      {{ messageText.length }} / {{ maxLength }}
+    </span>
+
+    <span *ngIf="isOverLimit()" class="error-message">
+      Mensaje muy largo
+    </span>
+  </div>
+</form>

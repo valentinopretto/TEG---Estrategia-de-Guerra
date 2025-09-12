@@ -1,0 +1,160 @@
+/* login.component.css */
+/* Estilos adicionales para el componente de login */
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.login-background {
+  min-height: 100vh;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url('../../../../../public/images/teg-map-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  /* ... */
+}
+
+.teg-gradient-background {
+  min-height: 100vh;
+  background: linear-gradient(135deg,
+  #2563eb 0%,
+  #1e40af 25%,
+  #1e3a8a 50%,
+  #312e81 75%,
+  #1e1b4b 100%);
+  /* ... */
+}
+
+.teg-background {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Animaciones personalizadas */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Efectos de hover personalizados */
+.button-hover:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para inputs en estado focus */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+/* Efectos de transición suaves */
+.smooth-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Estilo para el logo TEG */
+.teg-logo {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Arial Black', Arial, sans-serif;
+}
+
+/* ============================= */
+
+/* register.component.css */
+/* Estilos adicionales para el componente de registro */
+
+.teg-background {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Animaciones personalizadas */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Validación visual mejorada */
+.input-valid {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.input-invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Efectos de hover personalizados */
+.button-hover:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para inputs en estado focus */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+/* Efectos de transición suaves */
+.smooth-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Estilo para el logo TEG */
+.teg-logo {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Arial Black', Arial, sans-serif;
+}
+
+/* Animación para mensajes de validación */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.validation-message {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Estilos responsive adicionales */
+@media (max-width: 640px) {
+  .teg-logo {
+    font-size: 3rem;
+  }
+
+  .form-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}

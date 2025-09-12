@@ -1,0 +1,34 @@
+<div class="messages-container"
+     #messagesContainer
+     (focus)="onContainerFocus()"
+     tabindex="0">
+
+  <div *ngFor="let message of messages; trackBy: trackByMessageId"
+       class="message-wrapper"
+       [class.system-message]="isSystemMessage(message)"
+       [class.private-message]="isPrivateMessage(message)">
+
+    <div class="message-content">
+      <div class="message-header">
+        <span class="sender-name"
+              [class.system-sender]="isSystemMessage(message)">
+          {{ message.senderName }}
+        </span>
+        <span class="message-time">
+          {{ formatTime(message.sentAt) }}
+        </span>
+        <span *ngIf="isPrivateMessage(message)" class="private-badge">
+          Privado
+        </span>
+      </div>
+
+      <div class="message-text">
+        {{ message.content }}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="messages.length === 0" class="no-messages">
+    <p>No hay mensajes aún. ¡Sé el primero en escribir!</p>
+  </div>
+</div>

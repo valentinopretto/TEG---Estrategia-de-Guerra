@@ -1,0 +1,6 @@
+export enum CardType {
+  INFANTRY = 'INFANTRY',
+  CAVALRY = 'CAVALRY',
+  CANNON = 'CANNON',
+  WILDCARD = 'WILDCARD'
+}

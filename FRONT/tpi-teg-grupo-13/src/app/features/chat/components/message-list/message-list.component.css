@@ -1,0 +1,217 @@
+.messages-container {
+  height: 100%;
+  overflow-y: auto;
+  padding: 6px 10px; /* ✨ Más compacto */
+  background: linear-gradient(135deg, #2c1810 0%, #3d2518 50%, #2c1810 100%); /* ✨ Fondo TEG - marrón oscuro militar */
+  background-size: 400% 400%;
+  animation: subtleGradient 20s ease infinite; /* ✨ Gradiente sutil animado */
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* ✨ Animación sutil del fondo */
+@keyframes subtleGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ✨ Textura de papel viejo superpuesta */
+.messages-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(139, 105, 80, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, rgba(160, 145, 107, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px, 15px 15px;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.message-wrapper {
+  margin-bottom: 6px; /* ✨ Más compacto */
+  position: relative;
+  z-index: 1;
+}
+
+.message-wrapper:last-child {
+  margin-bottom: 2px;
+}
+
+.message-wrapper.system-message {
+  opacity: 0.9;
+}
+
+.message-wrapper.system-message .message-content {
+  background: linear-gradient(135deg, #4a3728 0%, #5c4435 100%); /* ✨ TEG - mensaje del sistema más oscuro */
+  border: 1px solid #6b4d36;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1); /* ✨ Efecto metálico */
+}
+
+.message-wrapper.private-message {
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%); /* ✨ TEG - mensaje privado en tonos cobre */
+  border-left: 4px solid #cd853f;
+  border-radius: 6px;
+  padding: 4px 6px; /* ✨ Más compacto */
+  margin-left: 6px;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.message-content {
+  background: linear-gradient(135deg, #d4af7a 0%, #c19a6b 50%, #b8956a 100%); /* ✨ TEG - pergamino dorado */
+  border-radius: 6px;
+  padding: 6px 8px; /* ✨ Más compacto */
+  border: 1px solid #8b6914;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.25), /* ✨ Sombra más pronunciada */
+    inset 0 1px 0 rgba(255, 255, 255, 0.2), /* ✨ Brillo superior */
+    inset 0 -1px 0 rgba(139, 105, 20, 0.3); /* ✨ Sombra inferior */
+  position: relative;
+}
+
+/* ✨ Efecto de textura en los mensajes */
+.message-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(45deg, rgba(139, 105, 20, 0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(139, 105, 20, 0.05) 25%, transparent 25%);
+  background-size: 8px 8px, 8px 8px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3px; /* ✨ Más compacto */
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.sender-name {
+  font-weight: 700; /* ✨ Más bold para efecto militar */
+  color: #2c1810; /* ✨ TEG - marrón muy oscuro */
+  font-size: 12px; /* ✨ Más compacto */
+  flex-shrink: 0;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3); /* ✨ Sombra dorada */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sender-name.system-sender {
+  color: #d4af7a; /* ✨ TEG - dorado para sistema */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.message-time {
+  font-size: 10px; /* ✨ Más pequeño */
+  color: #5c4435; /* ✨ TEG - marrón medio */
+  flex-shrink: 0;
+  font-weight: 500;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.private-badge {
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%); /* ✨ TEG - cobre/bronce */
+  color: #ffd700; /* ✨ Dorado */
+  font-size: 9px;
+  padding: 2px 4px;
+  border-radius: 8px;
+  font-weight: 600;
+  flex-shrink: 0;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #cd853f;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.message-text {
+  color: #2c1810; /* ✨ TEG - texto muy oscuro para contraste */
+  font-size: 12px; /* ✨ Más compacto */
+  line-height: 1.3; /* ✨ Más compacto */
+  word-wrap: break-word;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1); /* ✨ Sombra sutil */
+  font-weight: 500;
+}
+
+.system-message .message-text {
+  color: #d4af7a; /* ✨ Dorado para mensajes del sistema */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.no-messages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #d4af7a; /* ✨ TEG - dorado */
+  font-style: italic;
+  font-size: 13px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1;
+}
+
+.no-messages p {
+  margin: 0;
+  text-align: center;
+  padding: 20px;
+  background: rgba(212, 175, 122, 0.1); /* ✨ Fondo sutil */
+  border-radius: 8px;
+  border: 1px dashed #d4af7a;
+}
+
+/* ✨ Scrollbar con temática TEG */
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: #2c1810; /* ✨ TEG - fondo oscuro */
+  border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #8b6914 0%, #cd853f 100%); /* ✨ TEG - dorado/cobre */
+  border-radius: 3px;
+  border: 1px solid #5c4435;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #cd853f 0%, #daa520 100%); /* ✨ Más dorado al hover */
+}
+
+/* ✨ Animación de aparición de mensajes */
+.message-wrapper {
+  animation: messageAppear 0.3s ease-out;
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

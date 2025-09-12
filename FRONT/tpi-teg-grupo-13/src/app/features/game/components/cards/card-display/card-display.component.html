@@ -1,0 +1,47 @@
+<div
+  class="card-container"
+  [class.selected]="isSelected"
+  [class.disabled]="!canSelect"
+  [ngClass]="getCardTypeClass()"
+  (click)="onCardClick()">
+
+  <!-- Carta base -->
+  <div class="card-base">
+
+    <!-- Header con símbolo y tipo -->
+    <div class="card-header">
+      <div class="symbol-container">
+        {{ getSymbolIcon() }}
+      </div>
+      <div class="card-type">
+        {{ getCardTypeName() }}
+      </div>
+    </div>
+
+    <!-- Imagen/Icono central -->
+    <div class="card-center">
+      <div class="main-icon" [ngClass]="getIconColorClass()">
+        {{ getMainIcon() }}
+      </div>
+    </div>
+
+    <!-- Footer con símbolo repetido -->
+    <div class="card-footer">
+      <div class="symbol-small">
+        {{ getSymbolIcon() }}
+      </div>
+    </div>
+
+    <!-- Territorio si tiene -->
+    <div *ngIf="card.territory" class="territory-name">
+      {{ card.territory }}
+    </div>
+  </div>
+
+  <!-- Overlay de selección -->
+  <div *ngIf="isSelected" class="selection-overlay">
+    <div class="selection-check">
+      ✓
+    </div>
+  </div>
+</div>

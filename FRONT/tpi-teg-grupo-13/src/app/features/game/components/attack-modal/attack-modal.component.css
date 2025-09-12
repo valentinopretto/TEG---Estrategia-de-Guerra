@@ -1,0 +1,332 @@
+/* attack-modal.component.css */
+
+/* ========================================
+   Overlay y contenedor principal
+   ======================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+select, option {
+  background-color: white !important;
+  color: gray !important;
+}
+
+.modal-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 100rem;   /* aprox. max-w-4xl */
+  width: 100%;
+  margin: 0 1rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* ========================================
+   Header
+   ======================================== */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1rem;
+}
+.modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+.modal-header .close-button {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  color: #718096;
+  cursor: pointer;
+  transition: color .2s;
+}
+.modal-header .close-button:hover {
+  color: #4a5568;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+/* ========================================
+   Cuerpo del modal
+   ======================================== */
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Resultados */
+.attack-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Resumen (encabezado de resultados) */
+.results-summary {
+  background: linear-gradient(to right, #ffe5e5, #e5f2ff);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+}
+.results-summary h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+/* Paneles de Atacante y Defensor */
+.result-panel {
+  padding: 1rem;
+  border-radius: 8px;
+}
+.result-panel.attacker {
+  background-color: #ebf8ff;
+}
+.result-panel.defender {
+  background-color: #fff5f5;
+}
+.result-panel h4 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+.result-panel.attacker h4 { color: #2b6cb0; }
+.result-panel.defender h4 { color: #c53030; }
+.result-panel p { margin-bottom: .75rem; color: #4a5568; }
+
+/* Dados */
+.dice-group {
+  display: flex;
+  gap: .5rem;
+  margin-top: .5rem;
+}
+.dice {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.875rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.attacker .dice { background-color: #3182ce; color: #fff; }
+.defender .dice { background-color: #e53e3e; color: #fff; }
+
+/* Detalles de pérdidas y restantes */
+.losses,
+.remaining {
+  font-size: .875rem;
+  color: #2d3748;
+}
+.losses span { font-weight: 700; color: #c53030; }
+.remaining span { font-weight: 700; }
+
+/* Mensaje final */
+.final-result {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+.final-result.conquered {
+  background-color: #f0fff4;
+  border: 2px solid #9ae6b4;
+}
+.final-result.failed {
+  background-color: #fffff0;
+  border: 2px solid #faf089;
+}
+.final-result h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+.final-result.conquered h4 { color: #2f855a; }
+.final-result.failed h4 { color: #b7791f; }
+.final-result p { color: #4a5568; }
+
+/* Botones de acción en resultados */
+.results-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+.results-actions .btn {
+  padding: .5rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s;
+  border: none;
+}
+.btn-repeat {
+  background: #3182ce;
+  color: #fff;
+}
+.btn-repeat:hover {
+  background: #2c5282;
+}
+.btn-close {
+  background: #4a5568;
+  color: #fff;
+}
+.btn-close:hover {
+  background: #2d3748;
+}
+
+/* ========================================
+   Formulario de ataque
+   ======================================== */
+.attack-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Paneles de selección */
+.selection-panels {
+  display: grid;
+  gap: 1.5rem;
+}
+@media (min-width: 1024px) {
+  .selection-panels { grid-template-columns: repeat(2, 1fr); }
+}
+.selection-panel {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+.selection-panel h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: .5rem;
+}
+.selection-panel label {
+  font-size: .875rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+.selection-panel select {
+  padding: .5rem 1rem;
+  font-size: .875rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color .2s;
+}
+.selection-panel select:focus {
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49,130,206,0.3);
+}
+
+/* Info de territorio */
+.territory-info {
+  background-color: #ebf8ff;
+  padding: .75rem 1rem;
+  border-radius: 6px;
+}
+.territory-info.defender {
+  background-color: #fff5f5;
+}
+.territory-info h4 {
+  font-weight: 600;
+  color: #2b6cb0;
+  margin-bottom: .25rem;
+}
+.territory-info.defender h4 { color: #c53030; }
+.territory-info p {
+  font-size: .75rem;
+  color: #4a5568;
+}
+
+/* Resumen dinámico */
+.attack-summary {
+  background-color: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+.attack-summary h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+.attack-summary-grid {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .attack-summary-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.attack-summary-grid div span {
+  display: block;
+  font-size: .75rem;
+  color: #4a5568;
+}
+.attack-summary-grid div p {
+  font-size: .875rem;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+/* Botones de acción del formulario */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+.form-actions .btn {
+  padding: .5rem 1.5rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .2s, opacity .2s;
+  border: none;
+}
+.btn-cancel {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+.btn-cancel:hover {
+  background: #cbd5e0;
+}
+.btn-submit {
+  background: #e53e3e;
+  color: #fff;
+}
+.btn-submit:hover {
+  background: #c53030;
+}
+.btn-submit:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}

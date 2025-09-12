@@ -1,0 +1,203 @@
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+/* Estilos para hacer el mapa responsivo y centrado */
+.map-wrapper {
+  position: absolute;
+  top: 70px; /* Espacio para el header */
+  left: 0;
+  right: 0;
+  bottom: 80px; /* Espacio para el footer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+
+/* Asegurar que el componente del mapa ocupe todo el espacio disponible */
+app-game-map {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Si el mapa es un SVG o canvas, asegurar que se escale correctamente */
+app-game-map svg,
+app-game-map canvas,
+app-game-map img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Ajustes para pantallas móviles */
+@media (max-width: 768px) {
+  .map-wrapper {
+    top: 100px; /* Más espacio para el header responsivo */
+    bottom: 120px; /* Más espacio para el footer */
+  }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .map-wrapper {
+    top: 110px;
+    bottom: 140px;
+  }
+}
+
+/* Asegurar que el chat panel sea responsivo */
+.chat-panel-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.chat-panel-fixed-wrapper {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  max-width: 400px;
+  height: calc(100vh - 200px);
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(8px);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  pointer-events: auto;
+}
+
+.chat-panel-fixed-wrapper.chat-open {
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .chat-panel-fixed-wrapper {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* Ajustes para indicadores de jugadores en móviles */
+@media (max-width: 768px) {
+  .absolute.bottom-20.right-2 {
+    bottom: 140px; /* Más espacio desde abajo en móviles */
+  }
+}
+
+/* Scroll horizontal para botones en móviles */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+.background-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+
+}
+
+svg {
+  width: 109vw; /* ajustá esto probando: 80vw, 85vw, etc. */
+  height: auto;
+  transform: translate(-58px, -193px);
+  z-index: 1;
+}
+
+/* Tooltip styles */
+.territory-tooltip {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 250px;
+  backdrop-filter: blur(4px);
+}
+
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tooltip-title {
+  font-weight: bold;
+  font-size: 16px;
+  color: #ffd700;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+}
+
+.tooltip-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tooltip-label {
+  font-weight: 500;
+  color: #ccc;
+  margin-right: 8px;
+}
+
+.tooltip-value {
+  font-weight: bold;
+  color: #fff;
+  text-align: right;
+}
+
+/* Hover effect for territories */
+.territory-path {
+  cursor: pointer;
+  transition: stroke-width 0.2s ease;
+}
+
+.territory-path:hover {
+  stroke-width: 2.5;
+  stroke: #333;
+}

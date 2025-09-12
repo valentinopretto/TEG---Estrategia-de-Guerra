@@ -1,0 +1,197 @@
+@startuml TEG System Interfaces
+
+skinparam {
+  handwritten false
+  shadowing false
+  monochrome false
+  linetype polyline
+  defaultFontName Arial
+  defaultFontSize 12
+  roundCorner 10
+}
+
+interface UserAuthenticationInterface {
+  +authenticate(rawPassword: String): boolean
+  +updateEmail(newEmail: String)
+  +updateAvatar(url: String)
+  +registerUser(username: String, password: String, email: String): User
+  +getAvailableGames(): List<Game>
+}
+
+interface PlayerManagementInterface {
+  +placeReinforcements()
+  +performAttack()
+  +performFortify()
+  +tradeCards()
+  +isEliminated(): boolean
+  +hasWon(game: Game): boolean
+  +isHuman(): boolean
+  +isBot(): boolean
+  +getPlayerHand(): List<Card>
+}
+
+interface BotStrategyInterface {
+  +reinforce(): void
+  +attack(): CombatResult
+  +fortify(): void
+  +getBotDifficulty(): int
+}
+
+interface GameControlInterface {
+  +start()
+  +end()
+  +nextTurn()
+  +attack(attacker, from, to, dA, dD): CombatResult
+  +reinforce(player, placements)
+  +fortify(player, from, to, armies)
+  +drawCards(count: int): List<Card>
+  +tradeCards(player, cards: List<Card>)
+  +isOver(): boolean
+  +getWinner(): Player
+  +saveSnapshot()
+  +hasSlot(): boolean
+  +isOpen(): boolean
+  +addPlayer(user: User): Player
+  +setOpen(open: boolean)
+  +getCurrentPhase(): Phase
+  +getCurrentRound(): int
+}
+
+interface TerritoryManagementInterface {
+  +isNeighbor(other: Country): boolean
+  +canAttackFrom(from: Country): boolean
+  +getCountryById(id: int): Country
+  +getCountriesByPlayer(player: Player): List<Country>
+  +getCountriesByContinent(continent: Continent): List<Country>
+  +updateCountryOwnership(country: Country, player: Player)
+  +updateCountryArmies(country: Country, armies: int)
+}
+
+interface ContinentManagementInterface {
+  +isControlledBy(player: Player): boolean
+  +getContinentById(id: int): Continent
+  +getAllContinents(): List<Continent>
+  +getContinentBonus(continent: Continent): int
+}
+
+interface DeckManagementInterface {
+  +draw(): Card
+  +discard(cards: List<Card>)
+  +remaining(): int
+  +getCardById(id: int): Card
+  +getCardsByPlayer(player: Player): List<Card>
+  +isCardUsed(card: Card): boolean
+}
+
+interface ObjectivesInterface {
+  +isAchieved(game: Game, player: Player): boolean
+  +getObjectiveById(id: int): Objective
+  +getObjectivesByType(type: TypeObjective): List<Objective>
+  +getObjectiveDescription(objective: Objective): String
+}
+
+interface GameEventsInterface {
+  +apply(state: GameState)
+  +getEventById(id: int): GameEvent
+  +getEventsByGame(game: Game): List<GameEvent>
+  +getEventsByPlayer(player: Player): List<GameEvent>
+  +getEventsByAction(action: Action): List<GameEvent>
+  +createEvent(game: Game, player: Player, action: Action, info: String): GameEvent
+}
+
+interface TurnTimerInterface {
+  +start()
+  +cancel()
+  +hasTimedOut(): boolean
+  +getActiveTimerByGame(game: Game): TurnTimer
+  +getRemainingTime(): int
+}
+
+interface GameSnapshotInterface {
+  +createFrom(game: Game): GameSnapshot
+  +restore(game: Game)
+  +getSnapshotsByGame(game: Game): List<GameSnapshot>
+  +getLatestSnapshot(game: Game): GameSnapshot
+}
+
+interface InvitationManagementInterface {
+  +accept()
+  +decline()
+  +sendInvitation(sender: User, recipient: User, game: Game): Invitation
+  +getInvitationsByUser(user: User): List<Invitation>
+  +getPendingInvitations(user: User): List<Invitation>
+}
+
+interface CommunicationRulesInterface {
+  +validate(msg: ChatMessage): boolean
+  +isChatEnabled(game: Game): boolean
+}
+
+interface CombatInterface {
+  +calculateCombatResult(attacker: Country, defender: Country, attackerDice: int, defenderDice: int): CombatResult
+  +resolveAttack(combatResult: CombatResult): void
+  +getAttackerLosses(): int
+  +getDefenderLosses(): int
+  +isTerritoryConquered(): boolean
+}
+
+interface MainMenuInterface {
+  +createGame()
+  +joinGame()
+  +showRules()
+}
+
+interface GameConfigurationInterface {
+  +setPlayerCount(count: int)
+  +enableChat(enabled: boolean)
+  +enableSpecialRules(enabled: boolean)
+  +setTurnTimeLimit(minutes: int)
+  +createGame(): Game
+  +saveGameRules(rules: String)
+}
+
+interface WaitingRoomInterface {
+  +getConnectedPlayers(): List<Player>
+  +startGame()
+  +changeHost(player: Player)
+  +isGameReady(): boolean
+}
+
+interface GameScreenInterface {
+  +attack(from: Country, to: Country, armies: int)
+  +regroupTroops(from: Country, to: Country, armies: int)
+  +endTurn()
+  +pauseGame()
+  +resumeGame()
+  +abandonGame()
+  +getCurrentGameState(): GameState
+}
+
+interface EventHistoryInterface {
+  +getEvents(): List<GameEvent>
+}
+
+interface ChatInterface {
+  +sendMessage(content: String)
+  +getMessages(): List<ChatMessage>
+  +hasUnreadMessages(): boolean
+  +getMessageById(id: int): ChatMessage
+  +getMessagesByGame(game: Game): List<ChatMessage>
+  +getMessagesByPlayer(player: Player): List<ChatMessage>
+}
+
+interface GameStateInterface {
+  +getStateById(id: int): State
+  +getAllStates(): List<State>
+  +changeGameState(game: Game, state: State)
+  +isGameActive(game: Game): boolean
+}
+
+interface BorderManagementInterface {
+  +getBorderById(id: int): Border
+  +getBordersBetweenCountries(country1: Country, country2: Country): List<Border>
+  +getAllBorders(): List<Border>
+  +getNeighborCountries(country: Country): List<Country>
+}
+
+@enduml

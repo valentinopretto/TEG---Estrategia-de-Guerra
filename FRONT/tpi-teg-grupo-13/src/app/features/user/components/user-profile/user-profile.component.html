@@ -1,0 +1,120 @@
+<!-- user-profile.component.html -->
+<div class="casino-bg min-h-screen text-white relative overflow-hidden w-full p-0 m-0">
+
+  <!-- Botón de cerrar -->
+  <button class="back-to-lobby" (click)="closeProfile()">
+    <span class="arrow">←</span>
+    Volver al Lobby
+  </button>
+
+  <div class="flex max-w-6xl mx-auto p-10 gap-10 min-h-screen items-center relative z-10 flex-col lg:flex-row">
+
+    <!-- Sección Historial de Partidas -->
+    <div class="flex-1 bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl w-full">
+      <h2 class="text-2xl font-bold mb-8 text-center tracking-widest uppercase text-white">
+        Historial de Partidas
+      </h2>
+
+      <div class="overflow-hidden rounded-xl">
+        <table class="w-full border-collapse bg-white/5">
+          <thead>
+          <tr class="bg-white/20">
+            <th class="p-4 text-center font-bold uppercase tracking-wide text-white">Fecha</th>
+            <th class="p-4 text-center font-bold uppercase tracking-wide text-white">Rivales</th>
+            <th class="p-4 text-center font-bold uppercase tracking-wide text-white">Resultado</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let game of gameHistory; trackBy: trackByFn"
+              class="border-b border-white/10 hover:bg-white/10 transition-colors">
+            <td class="py-5 px-4 text-center text-white/90">{{ game.fecha }}</td>
+            <td class="py-5 px-4 text-center text-white/90">{{ game.rivales }}</td>
+            <td class="py-5 px-4 text-center font-bold" [ngClass]="getResultClass(game.resultado)">
+              {{ game.resultado }}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Sección Datos de Usuario -->
+    <div class="flex-1 bg-white/10 backdrop-blur-lg rounded-2xl p-10 border border-white/20 relative shadow-2xl w-full">
+      <h2 class="text-3xl font-bold text-center mb-10 tracking-widest uppercase text-white">
+        Datos de Usuario
+      </h2>
+
+      <!-- Avatar -->
+      <div class="w-20 h-20 rounded-full bg-white/20 border-4 border-white/30 flex items-center justify-center mx-auto mb-8 relative cursor-pointer transition-all duration-300 hover:scale-105 hover:border-white/50 group"
+           (click)="editAvatar()">
+        <span class="text-4xl text-white/80">👤</span>
+        <button class="absolute -top-1 -right-1 bg-red-600 hover:bg-red-700 text-white border-none rounded-full w-8 h-8 cursor-pointer text-xs transition-all duration-300 hover:scale-110">
+          ✏️
+        </button>
+      </div>
+
+      <!-- Campo Username -->
+      <div class="mb-6 relative">
+        <label class="block text-lg font-bold mb-2 tracking-wide uppercase text-white">
+          Username:
+        </label>
+        <input
+          type="text"
+          [(ngModel)]="userData.username"
+          placeholder="Ingresa tu username"
+          [readonly]="!editingFields.username"
+          [class]="'w-full py-3 px-4 pr-20 bg-white/10 border-2 rounded-lg text-white text-base transition-all duration-300 focus:outline-none focus:border-blue-500 focus:bg-white/15 placeholder-white/60 ' + (editingFields.username ? 'border-green-500 bg-white/20' : 'border-white/20')"
+        >
+        <button
+          [class]="'absolute right-3 top-9 border py-2 px-3 rounded text-xs cursor-pointer font-bold transition-all duration-300 ' + (editingFields.username ? 'bg-green-600 border-green-600 text-white hover:bg-green-700' : 'bg-transparent border-white/50 text-white/80 hover:bg-white/10 hover:text-white')"
+          (click)="editingFields.username ? saveField('username') : toggleEdit('username')">
+          {{ editingFields.username ? 'GUARDAR' : 'EDITAR' }}
+        </button>
+      </div>
+
+      <!-- Campo Email -->
+      <div class="mb-6 relative">
+        <label class="block text-lg font-bold mb-2 tracking-wide uppercase text-white">
+          E-mail:
+        </label>
+        <input
+          type="email"
+          [(ngModel)]="userData.email"
+          placeholder="Ingresa tu email"
+          [readonly]="!editingFields.email"
+          [class]="'w-full py-3 px-4 pr-20 bg-white/10 border-2 rounded-lg text-white text-base transition-all duration-300 focus:outline-none focus:border-blue-500 focus:bg-white/15 placeholder-white/60 ' + (editingFields.email ? 'border-green-500 bg-white/20' : 'border-white/20')"
+        >
+        <button
+          [class]="'absolute right-3 top-9 border py-2 px-3 rounded text-xs cursor-pointer font-bold transition-all duration-300 ' + (editingFields.email ? 'bg-green-600 border-green-600 text-white hover:bg-green-700' : 'bg-transparent border-white/50 text-white/80 hover:bg-white/10 hover:text-white')"
+          (click)="editingFields.email ? saveField('email') : toggleEdit('email')">
+          {{ editingFields.email ? 'GUARDAR' : 'EDITAR' }}
+        </button>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="mt-8">
+        <!-- Botón principal Guardar Cambios -->
+        <button
+          [disabled]="isSaving"
+          [class]="'w-full py-4 px-6 bg-gradient-to-r text-white border-none rounded-xl text-base font-bold cursor-pointer transition-all duration-300 uppercase tracking-wide hover:-translate-y-1 hover:shadow-lg mb-4 ' + (isSaving ? 'from-gray-500 to-gray-600' : 'from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 hover:shadow-green-600/40')"
+          (click)="saveAllChanges()">
+          {{ isSaving ? 'Guardando...' : 'Guardar Cambios' }}
+        </button>
+
+        <!-- Link Modificar Contraseña -->
+        <div class="text-center">
+          <button
+            class="text-white hover:text-white-300 text-md underline hover:no-underline cursor-pointer bg-transparent border-none transition-colors duration-300"
+            (click)="changePassword()">
+            Modificar Contraseña
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal de Cambio de Contraseña -->
+  <app-change-password-modal
+    [isVisible]="isChangePasswordModalVisible"
+    (onClose)="closeChangePasswordModal()">
+  </app-change-password-modal>
+</div>

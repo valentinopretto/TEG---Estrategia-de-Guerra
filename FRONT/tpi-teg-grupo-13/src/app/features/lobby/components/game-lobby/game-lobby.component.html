@@ -1,0 +1,41 @@
+<div class="game-lobby-container">
+
+  <!-- Botones arriba a la derecha -->
+  <div class="absolute top-4 right-4 flex space-x-3">
+    <!-- Botón de configuración/settings -->
+    <button
+      (click)="goToUserSettings()"
+      class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md shadow settings-btn">
+      ⚙️
+    </button>
+
+    <!-- Botón de logout -->
+    <button
+      (click)="logout()"
+      class="bg-red-400 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow logout-btn">
+      Cerrar Sesión
+    </button>
+
+  </div>
+
+  <div class="flex flex-col items-center justify-center h-screen text-white">
+    <h1 class="text-6xl font-bold mb-12 drop-shadow-lg">T.E.G.</h1>
+
+    <!-- Botones verticales centrados -->
+    <div class="flex flex-col space-y-6 w-64">
+      <button
+        (click)="createGameAndRedirect()"
+        [disabled]="isLoading"
+        class="bg-[#f0e0c6] hover:bg-[#e6d3b1] text-black font-bold py-4 rounded-md transition-all duration-200 shadow-md">
+        {{ isLoading ? 'Creando...' : 'CREAR PARTIDA' }}
+      </button>
+
+      <button
+        (click)="joinGameAndRedirect()"
+        class="bg-[#f25d5d] hover:bg-[#d94c4c] text-white font-bold py-4 rounded-md transition-all duration-200 shadow-md">
+        UNIRSE A PARTIDA
+      </button>
+    </div>
+  </div>
+
+</div>

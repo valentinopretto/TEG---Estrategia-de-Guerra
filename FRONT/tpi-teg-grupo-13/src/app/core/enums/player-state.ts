@@ -1,0 +1,9 @@
+// Player status enums
+export enum PlayerState {
+  CONNECTED = 'CONNECTED',
+  DISCONNECTED = 'DISCONNECTED',
+  WAITING = 'WAITING',
+  PLAYING = 'PLAYING',
+  ELIMINATED = 'ELIMINATED',
+  WINNER = 'WINNER'
+}

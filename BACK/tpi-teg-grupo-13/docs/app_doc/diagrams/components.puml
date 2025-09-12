@@ -1,0 +1,32 @@
+@startuml
+title TEG Game – Component Diagram
+
+package "Frontend (Angular / JS)" {
+  [Game UI] as GameUI
+}
+
+package "Backend (Java + Spring Boot)" {
+  [GameController]
+  [GameService]
+  [GameStateManager]
+  [ChatController]
+  [BotEngine]
+}
+
+package "Data Storage" {
+  database "SQL Server" as SQL
+  cloud "Redis" as Redis
+}
+
+GameUI --> GameController : REST API\n(GET/POST game actions)
+GameUI --> ChatController : WebSocket (chat, updates)
+GameController --> GameService : Handle game logic
+GameService --> GameStateManager : Manage game state
+GameService --> BotEngine : Simulate bot actions
+GameService --> SQL : Load/save game state\n
+GameStateManager --> Redis : Pub/Sub for real-time updates
+ChatController --> Redis : Publish chat messages
+Redis --> GameUI : Push updates (via WebSocket)
+SQL --> GameService : Return game data
+
+@enduml

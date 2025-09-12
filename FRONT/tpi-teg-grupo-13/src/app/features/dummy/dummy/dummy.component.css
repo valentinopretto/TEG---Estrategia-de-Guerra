@@ -1,0 +1,60 @@
+/* Estilo para el contenedor principal */
+.container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para cada elemento dummy */
+.dummy-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.dummy-item:hover {
+  background-color: #f0f8ff;
+}
+
+/* Estilo para el texto de estado */
+.active {
+  color: green;
+  font-weight: bold;
+}
+
+.inactive {
+  color: red;
+  font-style: italic;
+}
+
+/* Estilo para los botones */
+button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Estilo para el texto */
+p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}

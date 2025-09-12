@@ -1,0 +1,152 @@
+/* Panel general - Ahora se adapta al panel inferior */
+.player-cards-panel-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+  padding: 12px 14px;
+  border-radius: 12px;
+  z-index: 25;
+  max-width: 400px;
+  min-width: 280px;
+}
+
+/* Info superior */
+.cards-info {
+  font-size: 12px;
+  color: white;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+/* Botón */
+.trade-button-container {
+  margin-bottom: 6px;
+}
+
+.trade-button {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(40, 167, 69, 0.3);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trade-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.4);
+}
+
+.trade-button:disabled {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  cursor: not-allowed;
+}
+
+.trade-button.mandatory {
+  background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+  animation: pulse-warning 2s infinite;
+}
+
+.trade-button.loading {
+  background: linear-gradient(135deg, #17a2b8 0%, #007bff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.trade-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes pulse-warning {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes loading-shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Cartas alineadas horizontalmente */
+.cards-container {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 4px;
+}
+
+/* Scrollbar personalizada para las cartas */
+.cards-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.cards-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.cards-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.cards-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Feedback */
+.feedback-message {
+  font-size: 10px;
+  color: rgba(255,255,255,0.9);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .player-cards-panel-wrapper {
+    max-width: 300px;
+    min-width: 240px;
+    padding: 10px 12px;
+  }
+
+  .cards-info {
+    font-size: 11px;
+  }
+
+  .trade-button {
+    font-size: 11px;
+    padding: 5px 14px;
+  }
+
+  .feedback-message {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .player-cards-panel-wrapper {
+    max-width: 260px;
+    min-width: 200px;
+  }
+
+  .cards-container {
+    gap: 4px;
+  }
+}

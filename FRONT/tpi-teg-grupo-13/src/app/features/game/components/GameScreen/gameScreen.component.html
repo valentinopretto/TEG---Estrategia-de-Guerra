@@ -1,0 +1,323 @@
+<div class="bg-game h-100 w-full relative overflow-hidden">
+  <!-- Game Map -->
+  <div class="map-wrapper">
+    <app-game-map
+      [players]="gameState?.players"
+      [gameState]="gameState"
+    ></app-game-map>
+  </div>
+
+  <!-- Top Navigation Bar -->
+  <div
+    class="absolute top-0 left-0 right-0 bg-black bg-opacity-95 text-white px-2 sm:px-4 py-3 flex flex-col sm:flex-row justify-between items-center z-20 gap-2 sm:gap-0"
+  >
+    <!-- Chat Toggle -->
+    <div class="flex items-center space-x-3 order-1 sm:order-1">
+      <button
+        (click)="toggleChat()"
+        class="flex items-center space-x-2 hover:bg-slate-700 px-2 sm:px-3 py-2 rounded transition-colors text-sm sm:text-base"
+      >
+        <span class="font-bold">CHAT</span>
+        <span
+          class="transform transition-transform"
+          [class.rotate-180]="isChatOpen"
+        >▼</span
+        >
+      </button>
+    </div>
+
+    <!-- Mensaje de turno - Centrado y responsivo -->
+    <div class="text-center order-2 sm:order-2 flex-1 px-2">
+      @if(isPlayerTurn()){
+        <div class="space-y-1">
+          <h3 class="text-sm sm:text-lg font-bold text-white">
+            {{ getCurrentUser()?.username.toUpperCase() || 'Jugador' }}, es tu turno!
+          </h3>
+        </div>
+      } @else {
+        <div class="space-y-1">
+          <h3 class="text-sm sm:text-lg font-bold text-gray-200">
+            Es turno de {{ getCurrentTurnPlayerName() || 'otro jugador!'}}
+          </h3>
+        </div>
+      }
+    </div>
+
+
+    <div>
+    </div>
+  </div>
+
+  <!-- Panel de Timer y Mensaje de Turno - Responsivo -->
+  <div class="absolute top-16 sm:top-20 left-1/2 transform -translate-x-1/2 z-20 w-full px-4">
+    <div class="text-white rounded-lg px-4 sm:px-6 py-2 sm:py-4 max-w-md mx-auto">
+      <!-- Timer -->
+      <div class="flex justify-center">
+        <div class="bg-black bg-opacity-20 rounded-lg px-3 sm:px-4 py-2 backdrop-blur-sm">
+          <app-turn-timer
+            [duration]="gameState?.turnTimeLimit || 60"
+            [resetTrigger]="buildResetKey()"
+            [gameCode]="currentGameCode"
+            (timeUp)="onTimeUp()"
+          >
+          </app-turn-timer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Panel - Responsivo -->
+  <div class="chat-panel-container">
+    <div
+      class="chat-panel-fixed-wrapper"
+      [class.chat-open]="isChatOpen"
+      [class.chat-closed]="!isChatOpen"
+    >
+      <!-- Componente del chat -->
+      <app-chat-panel [gameCode]="currentGameCode" class="chat-panel-component">
+      </app-chat-panel>
+    </div>
+  </div>
+
+
+  <!-- Modal de Objetivo Secreto - Responsivo -->
+  <div
+    *ngIf="isObjectiveModalOpen"
+    class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"
+  >
+    <div
+      class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg p-4 sm:p-6 max-w-md w-full max-h-[90vh] overflow-y-auto"
+    >
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg sm:text-xl font-bold text-gray-800">Objetivo Secreto</h2>
+        <button
+          (click)="closeObjective()"
+          class="text-gray-500 hover:text-gray-700 text-2xl"
+          type="button"
+        >
+          ×
+        </button>
+      </div>
+
+      <div *ngIf="secretObjective; else loadingObjective" class="space-y-4">
+        <div>
+          <h3 class="font-semibold text-base sm:text-lg text-red-600">
+            {{ getObjectiveTitle() }}:
+          </h3>
+          <span
+            *ngIf="secretObjective.isAchieved"
+            class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-1"
+          >
+            Completado
+          </span>
+        </div>
+
+        <div>
+          <p class="text-gray-700 leading-relaxed text-sm sm:text-base">
+            {{ getFormattedDescription() }}
+          </p>
+        </div>
+        <div class="grid gap-4 text-sm sm:text-md">
+          <div class="bg-orange-50 p-3 rounded">
+            <span class="font-medium text-orange-800">Dificultad:</span>
+            <p class="text-orange-700">{{ getObjectiveDifficulty() }}</p>
+          </div>
+        </div>
+
+        <div
+          *ngIf="secretObjective.type === 'OCCUPATION'"
+          class="bg-blue-50 p-3 rounded"
+        >
+          <span class="font-medium text-blue-800">Estado:</span>
+          <p class="text-blue-700">
+            {{
+              secretObjective.isAchieved ? "Objetivo completado" : "En progreso"
+            }}
+          </p>
+        </div>
+      </div>
+
+      <ng-template #loadingObjective>
+        <div class="flex items-center justify-center py-8">
+          <div
+            class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"
+          ></div>
+          <span class="ml-3 text-gray-600 text-sm sm:text-base">Cargando objetivo...</span>
+        </div>
+      </ng-template>
+
+      <div class="mt-6 text-center">
+        <button
+          (click)="closeObjective()"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2 rounded-lg transition-colors text-sm sm:text-base"
+          type="button"
+        >
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Ataque -->
+  <app-attack-modal
+    [gameCode]="currentGameCode"
+    [isVisible]="isAttackModalOpen"
+    (closeModal)="closeAttackModal()"
+    (attackExecuted)="onAttackExecuted($event)"
+  >
+  </app-attack-modal>
+
+  <!-- Modal de Fortificación -->
+  <app-fortify-form
+    *ngIf="isFortifyModalOpen && currentPlayerId"
+    [isVisible]="isFortifyModalOpen"
+    [gameCode]="currentGameCode"
+    [playerId]="currentPlayerId"
+    [currentPhase]="gameState?.currentPhase"
+    (closeModal)="closeFortifyModal()"
+    (fortificationCompleted)="onFortificationCompleted($event)"
+  >
+  </app-fortify-form>
+
+  <!-- Bottom Control Panel -->
+<!--  <div class="absolute bottom-0 left-0 right-0 z-20">-->
+<!--    &lt;!&ndash; Panel de cartas flotante - Por encima de la barra &ndash;&gt;-->
+<!--    <div class="cards-floating-panel">-->
+<!--      <app-player-cards-panel-->
+<!--        [playerId]="getCurrentPlayerId()"-->
+<!--        *ngIf="getCurrentPlayerId()"-->
+<!--      >-->
+<!--      </app-player-cards-panel>-->
+<!--    </div>-->
+<!--  </div>-->
+
+  <!-- Player Turn Indicators - Responsivo -->
+  <div class="absolute bottom-20 right-2 sm:right-4 z-20">
+    <div class="flex flex-col space-y-1 sm:space-y-2">
+      <div
+        *ngFor="let player of gameState?.players; let i = index"
+        class="relative"
+      >
+        <div
+          [class]="getPlayerCircleClasses(player, i)"
+          class="text-xs sm:text-sm"
+        >
+          <span class="uppercase">
+            {{ getPlayerDisplayName(player) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="absolute bottom-0 left-0 right-0 bg-amber-200 bg-opacity-95 p-2 sm:p-4 z-20"
+  >
+    <div class="flex items-center justify-between gap-2 sm:gap-4">
+
+      <div class="flex-shrink-0">
+        <button
+          class="bg-amber-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-amber-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+          (click)="showObjective()"
+        >
+          VER OBJETIVO
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-x-auto">
+        <div class="flex justify-center space-x-2 sm:space-x-3 min-w-max">
+
+          @if(isPlayerTurn()){
+            @if(isAttackPhase()){
+              <button
+                class="bg-green-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+                (click)="attack()"
+              >
+                ATACAR
+              </button>
+
+              <button
+                class="bg-blue-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+                (click)="proceedToFortify()"
+              >
+                TERMINAR ATAQUE
+              </button>
+            }
+
+            @if(isFortifyPhase()){
+              <button
+                class="bg-blue-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+                (click)="continueFortify()"
+              >
+                REALIZAR FORTIFICACIÓN
+              </button>
+
+              <button
+                class="bg-blue-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+                (click)="proceedToClaimCard()"
+              >
+                TERMINAR FORTIFICACIÓN
+              </button>
+            }
+
+            @if(isClaimCardPhase()){
+              <button
+                class="bg-purple-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+                (click)="reclamarCarta()"
+              >
+                RECLAMAR CARTA
+              </button>
+
+              <button
+                class="bg-gray-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+                (click)="endTurnFromClaimCard()"
+              >
+                TERMINAR TURNO
+              </button>
+            }
+
+            @if(isEndTurnPhase()){
+              <button
+                class="bg-gray-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+                (click)="endTurnFromEndTurnPhase()"
+              >
+                TERMINAR TURNO
+              </button>
+            }
+
+            <button
+              *ngIf="shouldShowDeployArmiesButton()"
+              class="bg-yellow-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-yellow-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+              (click)="loadReinforcement()"
+            >
+              DESPLEGAR EJÉRCITOS
+            </button>
+          }
+
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <button
+          class="bg-red-600 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-red-700 transition-colors font-bold text-xs sm:text-sm whitespace-nowrap"
+          (click)="backToLobby()"
+        >
+          SALIR
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <app-initial-placement-modal
+    *ngIf="isReinforcementModalOpen"
+    [gameCode]="currentGameCode"
+    [playerId]="mandarPlayerId()"
+    [mode]="deploymentMode"
+    [availableArmies]="availableArmies"
+    [countries]="ownedTerritories"
+    (closed)="closeReinforcementModal()"
+    (placed)="onReinforcementPlaced()">
+  </app-initial-placement-modal>
+
+</div>

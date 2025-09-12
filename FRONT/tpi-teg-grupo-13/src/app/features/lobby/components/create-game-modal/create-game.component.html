@@ -1,0 +1,87 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+
+    <h2>Código de la Partida: <span class="game-code">{{ gameCode }}</span></h2>
+
+    <!-- Indicador de modo join -->
+    <div *ngIf="isJoinMode" class="join-mode-indicator">
+      <p>Te has unido a una partida existente. Las configuraciones están bloqueadas.</p>
+    </div>
+
+    <!-- CONTADOR DE JUGADORES -->
+    <div class="player-counter">
+      <h3>Jugadores en sala: {{ players.length }}/{{ maxPlayers }}</h3>
+    </div>
+
+    <!-- AVATAR / JUGADORES EN SALA -->
+    <div class="player-avatars">
+      <!-- Jugadores existentes -->
+      <div *ngFor="let player of players; let i = index" class="player-box" [class.bot]="player.isBot">
+        <div class="player-info">
+          <div class="player-name">
+        {{ player.displayName || player.username || 'Jugador desconocido' }}
+        <span *ngIf="player.isBot">🤖</span>
+          </div>
+          <div class="player-status" *ngIf="player.status">
+            {{ player.status }}
+          </div>
+        </div>
+      </div>
+      <!-- Cambiar a addSingleBot() para añadir manualmente -->
+      <div *ngFor="let _ of getEmptySlots()" class="player-box empty">
+        <button (click)="addSingleBot()" [disabled]="isJoinMode">Agregar Bot</button>
+      </div>
+    </div>
+
+    <div class="settings">
+      <div class="setting-item">
+        <label>Máx. jugadores:</label>
+        <button (click)="decreaseMaxPlayers()" [disabled]="isJoinMode">-</button>
+        <span>{{ maxPlayers }}</span>
+
+        <button (click)="increaseMaxPlayers()" [disabled]="isJoinMode">+</button>
+        <div class="info-icon" title="Si no se completa el máximo de jugadores seleccionado, se añadirán bots.">
+          <i>i</i>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label>Chat:</label>
+        <input type="checkbox"
+               [checked]="chatEnabled"
+               (change)="chatEnabled = !chatEnabled; onChatToggle()"
+               [disabled]="isJoinMode">
+      </div>
+
+      <div class="setting-item">
+        <label>Nivel de bots:</label>
+        <select [(ngModel)]="botLevel" [disabled]="isJoinMode">
+          <option *ngFor="let lvl of botLevels" [ngValue]="lvl">{{ lvl }}</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <label>Estrategia de bots:</label>
+        <select [(ngModel)]="botStrategy">
+<!--          <option *ngFor="let strat of botStrategies" [ngValue]="strat">{{ strat }}</option>-->
+          <option [ngValue]="BotStrategy.AGGRESSIVE" >AGGRESSIVE</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <label>Tiempo por turno:</label>
+        <button (click)="decreaseTurnTime()" [disabled]="isJoinMode">-</button>
+        <span>{{ turnTime }} seg</span>
+        <button (click)="increaseTurnTime()" [disabled]="isJoinMode">+</button>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="start-button" (click)="completeGameCreation()">
+        {{ isJoinMode ? 'Unirse al Juego' : 'Jugar' }}
+      </button>
+      <button class="exit-button" (click)="onCancel()">Salir</button>
+    </div>
+
+  </div>
+</div>

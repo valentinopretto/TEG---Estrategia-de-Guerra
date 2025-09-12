@@ -1,0 +1,318 @@
+@startuml TEG System Class Diagram
+
+' Estilos y configuración
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam classBackgroundColor #f5f5f5
+skinparam classBorderColor #999999
+skinparam arrowColor #666666
+skinparam linetype ortho
+
+' Clases principales
+class User {
+  -Long id
+  -String username
+  -String passwordHash
+  -String email
+  -String avatarUrl
+  +boolean authenticate(String rawPassword)
+  +void updateEmail(String newEmail)
+  +void updateAvatar(String url)
+}
+
+class BotProfile {
+  -Long id
+  -BotLevel level
+  -BotStrategy strategy
+  +static BotProfile create(BotLevel level)
+  +String getName()
+}
+
+class Game {
+  -Long id
+  -List<Player> players
+  -Map<Country, GameTerritory> territories
+  -Deck deck
+  -List<GameEvent> events
+  -GamePhase currentPhase
+  -int currentTurn
+  -CommunicationRules commRules
+  -TurnTimer turnTimer
+  -int maxPlayers
+  +void start()
+  +void end()
+  +void nextTurn()
+  +CombatResult attack(Player attacker, Country from, Country to, List<int> attackerDice, List<int> defenderDice)
+  +void reinforce(Player player, Map<Country,Integer> reinforcements)
+  +void fortify(Player player, Country from, Country to, int armies)
+  +List<Card> drawCards(int count)
+  +void tradeCards(Player player, List<Card> cards)
+  +boolean isOver()
+  +Player getWinner()
+  +void saveSnapshot()
+  +boolean hasSlot()
+  +Player addPlayer(User user)
+  +void setOpen(boolean open)
+}
+
+class Player {
+  -Long id
+  -User user
+  -BotProfile botProfile
+  -Objective objective
+  -List<Card> hand
+  -PlayerStatus status
+  -int armiesToPlace
+  -int seatOrder
+  +void placeReinforcements()
+  +void performAttack()
+  +void performFortify()
+  +void tradeCards()
+  +boolean isEliminated()
+  +boolean hasWon(Game game)
+  +boolean isHuman()
+  +boolean isBot()
+}
+
+class Country {
+  -Long id
+  -String name
+  -Continent continent
+  -Player owner
+  -int armies
+  -Set<Country> neighbors
+  +boolean isNeighbor(Country other)
+  +boolean canAttackFrom(Country from)
+}
+
+class Continent {
+  -Long id
+  -String name
+  -int bonusArmies
+  -Set<Country> countries
+  +boolean isControlledBy(Player player)
+}
+
+class Card {
+  -Long id
+  -Country country
+  -CardType type
+}
+
+class Deck {
+  -Deque<Card> drawPile
+  -List<Card> discardPile
+  +Card draw()
+  +void discard(List<Card> cards)
+  +int remaining()
+}
+
+class Objective {
+  -Long id
+  -ObjectiveType type
+  -String description
+  +boolean isAchieved(Game game, Player player)
+}
+
+class GameEvent {
+  -Long id
+  -int turnNumber
+  -Player actor
+  -EventType type
+  -String data
+  -LocalDateTime timestamp
+  +void apply(GameState state)
+}
+
+class CombatResult {
+  -Country attackerOrigin
+  -Country defenderTarget
+  -int[] attackerDice
+  -int[] defenderDice
+  -int attackerLosses
+  -int defenderLosses
+  -boolean territoryConquered
+}
+
+class ChatMessage {
+  -Long id
+  -Player sender
+  -Long gameId
+  -String content
+  -LocalDateTime sentAt
+}
+
+class TurnTimer {
+  -Long id
+  -Game game
+  -Player player
+  -LocalDateTime startTime
+  -LocalDateTime endTime
+  -boolean timedOut
+  +void start()
+  +void cancel()
+  +boolean hasTimedOut()
+}
+
+class GameSnapshot {
+  -Long id
+  -Long gameId
+  -int turnNumber
+  -String serializedState
+  -LocalDateTime createdAt
+  +static GameSnapshot createFrom(Game game)
+  +void restore(Game game)
+}
+
+class Invitation {
+  -Long id
+  -Game game
+  -User sender
+  -User recipient
+  -InvitationStatus status
+  -LocalDateTime sentAt
+  -LocalDateTime respondedAt
+  +void accept()
+  +void decline()
+}
+
+class RuleViolationReport {
+  -Long id
+  -Player reporter
+  -Player reported
+  -String reason
+  -LocalDateTime reportedAt
+  +void vote(Player voter, boolean approve)
+}
+
+class Vote {
+  -RuleViolationReport report
+  -Player voter
+  -boolean approve
+}
+
+class CommunicationRules {
+  -boolean chatAllowed
+  -boolean privateAgreementsAllowed
+  +boolean validate(ChatMessage msg)
+}
+
+' Enumeraciones
+enum PlayerStatus {
+  ACTIVE
+  INACTIVE
+  ELIMINATED
+}
+
+enum CardType {
+  INFANTRY
+  CAVALRY
+  CANNON
+}
+
+enum ObjectiveType {
+  COMMON
+  OCCUPATION
+  DESTRUCTION
+}
+
+enum EventType {
+  ATTACK
+  REINFORCE
+  FORTIFY
+  CARD_TRADE
+  TERRITORY_CONQUERED
+  PLAYER_ELIMINATED
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+enum BotLevel {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum GamePhase {
+  SETUP
+  REINFORCEMENT
+  ATTACK
+  FORTIFY
+  END
+}
+
+' Relaciones
+User "1" -- "0..*" Player : tiene >
+User "1" -- "0..*" Invitation : envía >
+User "1" -- "0..*" Invitation : recibe >
+
+BotProfile "1" -- "0..*" Player : tiene >
+
+Game "1" -- "2..*" Player : contiene >
+Game "1" -- "1" Deck : contiene >
+Game "1" -- "0..*" GameEvent : genera >
+Game "1" -- "1" CommunicationRules : usa >
+Game "1" -- "0..1" TurnTimer : tiene >
+Game "1" -- "0..*" GameSnapshot : genera >
+Game "1" -- "0..*" Invitation : referencia >
+
+Player "1" -- "1" Objective : tiene >
+Player "1" -- "0..*" Card : posee >
+Player "1" -- "0..*" Country : controla >
+Player "1" -- "0..*" ChatMessage : envía >
+Player "1" -- "0..*" RuleViolationReport : reporta >
+Player "1" -- "0..*" RuleViolationReport : es reportado >
+Player "1" -- "0..*" Vote : emite >
+
+Country "1" -- "1" Continent : pertenece a >
+Country "0..*" -- "0..*" Country : es vecino de >
+Country "1" -- "0..*" Card : referenciado por >
+
+Continent "1" -- "1..*" Country : contiene >
+
+RuleViolationReport "1" -- "0..*" Vote : tiene >
+
+' Notas explicativas
+note "Representa un usuario autenticado" as N1
+note "Define el comportamiento de los bots" as N2
+note "Núcleo del juego" as N3
+note "Abstrae la participación en un juego" as N4
+note "Representa un territorio en el juego" as N5
+note "Necesario para determinar bonos de control" as N6
+note "Usado para refuerzos" as N7
+note "Gestiona ciclo de vida de cartas" as N8
+note "Determina condición de victoria" as N9
+note "Soporta event sourcing e historial" as N10
+note "Resultado de batalla (solo lectura)" as N11
+note "Para comunicación en el juego" as N12
+note "Controla tiempo por turno" as N13
+note "Optimización para replay de eventos" as N14
+note "Permite invitaciones privadas" as N15
+note "Característica opcional para control social" as N16
+note "Sistema de votación para reportes" as N17
+note "Permite habilitar/deshabilitar comunicación" as N18
+
+User .. N1
+BotProfile .. N2
+Game .. N3
+Player .. N4
+Country .. N5
+Continent .. N6
+Card .. N7
+Deck .. N8
+Objective .. N9
+GameEvent .. N10
+CombatResult .. N11
+ChatMessage .. N12
+TurnTimer .. N13
+GameSnapshot .. N14
+Invitation .. N15
+RuleViolationReport .. N16
+Vote .. N17
+CommunicationRules .. N18
+
+@enduml

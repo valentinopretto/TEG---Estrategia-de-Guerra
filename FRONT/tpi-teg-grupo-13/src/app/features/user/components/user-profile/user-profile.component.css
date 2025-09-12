@@ -1,0 +1,61 @@
+
+.casino-bg {
+  font-family: 'Arial', sans-serif;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url('../../../../../../public/images/FONDO.png'),
+    linear-gradient(#247, #147);
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  color: white;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+
+  .back-to-lobby {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      0 8px 25px rgba(239, 68, 68, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+  }
+
+  .back-to-lobby:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-3px);
+    box-shadow:
+      0 15px 35px rgba(239, 68, 68, 0.6),
+      0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+
+  .back-to-lobby .arrow {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .back-to-lobby:hover .arrow {
+    transform: translateX(-4px);
+  }
+
+
+}

@@ -1,0 +1,25 @@
+@startuml
+title Sequence Diagram – Player Attacks a Country
+
+actor Player
+participant "Game UI" as UI
+participant "GameController" as Controller
+participant "GameService" as Service
+participant "GameStateManager" as State
+participant "SQL Server" as DB
+participant "Redis PubSub" as Redis
+
+Player -> UI : Clicks "Attack"
+UI -> Controller : POST /attack (source, target, dice)
+Controller -> Service : validateAndExecuteAttack()
+Service -> State : getCurrentGameState()
+State -> DB : (if needed) Load data
+State -> Service : return game state
+
+Service -> Service : Simulate dice roll\nUpdate territories
+Service -> DB : Save updated territories
+Service -> Redis : Publish attack result
+Redis -> UI : Push result via WebSocket
+UI -> Player : Show result (conquered?, dice, losses)
+
+@enduml

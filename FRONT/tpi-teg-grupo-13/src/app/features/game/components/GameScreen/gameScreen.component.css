@@ -1,0 +1,216 @@
+/* Estilos existentes del game-screen más estas adiciones: */
+/* Animaciones para las cartas */
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-container {
+  animation: cardAppear 0.3s ease-out;
+}
+
+
+
+.bg-game{
+  font-family: 'Arial', sans-serif;
+  background-color: #1c7ab3;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url('../../../../../../public/images/mapa-fondo-svg.png'),
+    linear-gradient(#003d66, #003d66);
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: brightness(1.2);
+  background-position: center;
+  min-height: 100vh;
+  color: white;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+/* Estilos para el contenedor de cartas dentro del panel inferior */
+.cards-section {
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+}
+/* Ajustes para el mapa - darle más espacio arriba del panel */
+
+/* ✨ ESTILOS EXISTENTES (mantener) */
+.map-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px;
+  padding-bottom: 80px; /* Más espacio para el panel de cartas flotante */
+}
+
+/* Panel de cartas flotante - Posicionamiento mejorado */
+.cards-floating-panel {
+  position: absolute;
+  bottom: 60px; /* Justo encima de la barra */
+  left: 16px;
+  z-index: 30;
+  pointer-events: auto;
+}
+
+/* Barra inferior más delgada */
+.bottom-control-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(253, 246, 195, 0.95);
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+  height: 48px; /* Más delgada - era 60px */
+  backdrop-filter: blur(5px);
+}
+
+/* Botones más compactos */
+.control-button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.control-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Espaciado específico para cada sección */
+.left-spacer {
+  flex-shrink: 0;
+  width: 320px; /* Espacio para el panel de cartas */
+}
+
+.center-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.right-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .left-spacer {
+    width: 240px;
+  }
+
+  .bottom-control-bar {
+    padding: 6px 12px;
+    height: 44px;
+  }
+
+  .control-button {
+    font-size: 1rem;
+    padding: 10px 20px;
+
+  }
+
+  .center-actions {
+    gap: 8px;
+  }
+
+  .right-actions {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .left-spacer {
+    width: 200px;
+  }
+
+  .bottom-control-bar {
+    flex-direction: column;
+    height: auto;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .center-actions,
+  .right-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+
+/* ✨ NUEVOS ESTILOS PARA EL CHAT - ALTURA FIJA GARANTIZADA */
+.chat-panel-container {
+  position: absolute;
+  top: 60px; /* Ajustar según tu header */
+  left: 0;
+  z-index: 10;
+  height: 384px; /* ✨ ALTURA FIJA - NUNCA CAMBIA */
+  width: 320px; /* w-80 = 320px */
+  pointer-events: none; /* ✨ Permite clicks "a través" cuando está cerrado */
+}
+
+.chat-panel-fixed-wrapper {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+  transform: translateX(-100%); /* ✨ Oculto por defecto */
+  transition: transform 0.3s ease-in-out;
+  pointer-events: auto; /* ✨ Permite interacción */
+  overflow: hidden; /* ✨ CRÍTICO: evita desbordamiento */
+}
+
+.chat-panel-fixed-wrapper.chat-open {
+  transform: translateX(0); /* ✨ Visible cuando está abierto */
+}
+
+.chat-panel-fixed-wrapper.chat-closed {
+  transform: translateX(-100%); /* ✨ Oculto cuando está cerrado */
+}
+
+/* ✨ El componente chat debe ocupar todo el contenedor */
+.chat-panel-component {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* ✨ CRÍTICO: evita que el contenido se desborde */
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}

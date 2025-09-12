@@ -1,0 +1,52 @@
+.register-background {
+  min-height: 100vh;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url('../../../../../public/images/teg-map-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  /* ... */
+}
+
+.teg-gradient-background {
+  min-height: 100vh;
+  background: linear-gradient(135deg,
+    #2563eb 0%,
+    #1e40af 25%,
+    #1e3a8a 50%,
+    #312e81 75%,
+    #1e1b4b 100%);
+  /* ... */
+}
+
+.teg-background {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Validación visual mejorada */
+.input-valid {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.input-invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}

@@ -1,0 +1,514 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Overlay principal */
+.victory-overlay {
+  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(15px);
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Contenedor principal de la victoria */
+.victory-container {
+  position: relative;
+  background: linear-gradient(145deg,
+  rgba(255, 215, 0, 0.95) 0%,
+  rgba(255, 193, 7, 0.98) 25%,
+  rgba(255, 235, 59, 0.95) 50%,
+  rgba(255, 193, 7, 0.98) 75%,
+  rgba(255, 215, 0, 0.95) 100%);
+  border-radius: 32px;
+  box-shadow:
+    0 25px 50px rgba(255, 215, 0, 0.4),
+    0 0 100px rgba(255, 215, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  max-width: 700px;
+  width: 90%;
+  margin: 0 20px;
+  max-height: 100vh;        /* 👈 Límite máximo para que no se desborde */
+  overflow-y: auto;        /* 👈 Scroll interno si se pasa del alto */
+  overflow: hidden;
+  animation: victoryEntrance 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Efectos de fondo dinámicos */
+.victory-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.1) 90deg,
+    transparent 180deg,
+    rgba(255, 255, 255, 0.1) 270deg,
+    transparent 360deg
+  );
+  animation: rotate 6s linear infinite;
+  pointer-events: none;
+}
+
+.victory-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 20%,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 70% 80%,
+    rgba(255, 215, 0, 0.3) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+/* Contenido principal */
+.victory-content {
+  position: relative;
+  z-index: 10;
+  padding: 40px;
+  text-align: center;
+}
+
+/* Título de Victoria */
+.victory-title {
+  margin-bottom: 30px;
+  animation: titleBounce 1s ease-out 0.3s both;
+}
+
+.victory-title h1 {
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(
+    45deg,
+    #b8860b 0%,
+    #ffd700 25%,
+    #ffff00 50%,
+    #ffd700 75%,
+    #b8860b 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 4px 8px rgba(184, 134, 11, 0.3),
+    0 0 30px rgba(255, 215, 0, 0.5);
+  animation: shimmer 2s ease-in-out infinite alternate;
+  margin-bottom: 15px;
+  letter-spacing: 3px;
+}
+
+.victory-underline {
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(90deg, #b8860b, #ffd700, #b8860b);
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Trofeo animado */
+.trophy-section {
+  margin-bottom: 40px;
+  animation: trophyFloat 1s ease-out 0.6s both;
+}
+
+.trophy-container {
+  position: relative;
+  display: inline-block;
+}
+
+.trophy-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.4) 0%,
+    rgba(255, 215, 0, 0.2) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.trophy-main {
+  position: relative;
+  z-index: 2;
+  font-size: 8rem;
+  filter: drop-shadow(0 10px 20px rgba(255, 215, 0, 0.4));
+  animation: trophySpin 3s ease-in-out infinite;
+}
+
+.trophy-rays {
+  position: absolute;
+  inset: -40px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 215, 0, 0.3) 45deg,
+    transparent 90deg,
+    rgba(255, 215, 0, 0.3) 135deg,
+    transparent 180deg,
+    rgba(255, 215, 0, 0.3) 225deg,
+    transparent 270deg,
+    rgba(255, 215, 0, 0.3) 315deg,
+    transparent 360deg
+  );
+  animation: rayRotate 4s linear infinite;
+  opacity: 0.7;
+}
+
+/* Información del ganador */
+.winner-section {
+  margin-bottom: 40px;
+  animation: slideUp 1s ease-out 0.9s both;
+}
+
+.winner-label {
+  font-size: 1.5rem;
+  color: rgba(139, 69, 19, 0.9);
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.winner-name {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  color: #8B4513;
+  margin-bottom: 20px;
+  text-shadow:
+    0 4px 8px rgba(139, 69, 19, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.4);
+  animation: nameGlow 3s ease-in-out infinite alternate;
+}
+
+
+
+.crown-badge span {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 4px rgba(139, 69, 19, 0.3));
+}
+
+/* Estadísticas */
+.stats-section {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  animation: fadeIn 1s ease-out 1.2s both;
+}
+
+.stats-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #8B4513;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.stat-value.players { color: #3b82f6; }
+.stat-value.duration { color: #10b981; }
+.stat-value.turns { color: #8b5cf6; }
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #8B4513;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  animation: fadeIn 1s ease-out 1.5s both;
+}
+
+.action-btn {
+  padding: 16px 32px;
+  border: none;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.action-btn:hover::before {
+  left: 100%;
+}
+
+.btn-lobby {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+}
+
+.btn-lobby:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+}
+
+.btn-play-again {
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+  color: white;
+}
+
+.btn-play-again:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* Confetti animado mejorado */
+.confetti-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  opacity: 0.8;
+  animation: confettiFall 4s linear infinite;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes victoryEntrance {
+  from {
+    opacity: 0;
+    transform: scale(0.3) translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes titleBounce {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes trophyFloat {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes trophySpin {
+  0%, 100% {
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(15deg) scale(1.05);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes rayRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nameGlow {
+  0%, 100% {
+    text-shadow:
+      0 4px 8px rgba(139, 69, 19, 0.3),
+      0 0 20px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    text-shadow:
+      0 4px 8px rgba(139, 69, 19, 0.5),
+      0 0 30px rgba(255, 215, 0, 0.8);
+  }
+}
+
+@keyframes crownBounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(2deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scaleX(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .victory-content {
+    padding: 30px 20px;
+  }
+
+  .trophy-main {
+    font-size: 6rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}

@@ -1,0 +1,184 @@
+@startuml
+
+entity States {
+  * id_state : int
+  * description : string
+}
+
+entity Games {
+  * id_game : int
+  * id_state : int
+  * n_players : int
+  * current_round : int
+  * time_limit : int
+  * rules : text
+  * created_at : datetime
+}
+
+entity Users {
+  * id_user : int
+  * username : string
+  * password : string
+  * email : string
+  * avatar : string
+}
+
+entity Bots {
+  * id_bot : int
+  * difficulty : int
+}
+
+entity Players {
+  * id_player : int
+  * id_game : int
+  * id_bot : int
+  * id_user : int
+  * id_objective : int
+}
+
+entity Phases {
+  * id_phase : int
+  * description : string
+}
+
+entity GameEvents {
+  * id_event : int
+  * id_game : int
+  * id_player : int
+  * id_action : int
+  * event_info : string
+  * datetime : datetime
+}
+
+entity Countries {
+  * id_country : int
+  * name : string
+  * id_player : int
+  * id_continent : int
+  * n_armies : int
+}
+
+entity Continents {
+  * id_continent : int
+  * name : string
+}
+
+entity Borders {
+  * id_border : int
+  * id_country1 : int
+  * id_country2 : int
+}
+
+entity Objectives {
+  * id_objective : int
+  * description : string
+  * id_type : int
+}
+
+entity TypeObjective {
+  * id_type : int
+  * description : string
+}
+
+entity Cards {
+  * id_card : int
+  * id_game : int
+  * id_country : int
+  * id_symbol : int
+  * is_discarded : bool 
+}
+
+entity Symbols {
+  * id_symbol : int
+  * description : string
+}
+
+entity Actions {
+  * id_action : int
+  * description : string
+}
+
+entity Messages {
+  * id_message : int
+  * id_player : int
+  * time_sent : datetime
+  * message : string
+  * id_game : int
+}
+
+entity Player_Hand {
+  * id_card : int
+  * id_player : int
+  * id_card_player : int
+  * is_used : bool
+  * id_game : int
+}
+
+entity GameSnapshots {
+  * id_snapshot : int
+  * id_game : int
+  * turn_number : int
+  * data_state : text
+  * created_at : datetime
+}
+
+entity TurnTimer {
+  * id_timer : int
+  * id_game : int
+  * id_player : int
+  * start_time : datetime
+  * end_time : datetime
+  * is_timeout : bool
+}
+
+' States connection
+Games --> States
+
+' Players connections
+Players *--> Games
+Players --> Bots
+Players --> Users
+Players --> Objectives
+
+' GameEvents connections
+GameEvents --> Games
+GameEvents --> Players
+GameEvents --> Actions
+
+' Countries connections
+Countries --> Players
+Countries --> Continents
+
+' Borders connections (each border links two countries)
+Borders --> Countries : id_country1
+Borders --> Countries : id_country2
+
+' Cards connections
+Cards --> Countries
+Cards --> Symbols
+
+' Messages connections
+Messages --> Players
+Messages --> Games
+
+' Player_Hand connections
+Player_Hand --> Cards
+Player_Hand *--> Players
+Player_Hand --> Games
+
+' GameSnapshots connection
+GameSnapshots *--> Games
+
+' TurnTimer connections
+TurnTimer *--> Games
+TurnTimer --> Players
+
+' TypeObjective connections
+TypeObjective --> Objectives
+
+' Phases connections
+Games --> Phases
+
+
+@enduml
+

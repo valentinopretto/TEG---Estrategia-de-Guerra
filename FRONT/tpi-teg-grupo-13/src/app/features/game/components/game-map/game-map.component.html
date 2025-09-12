@@ -1,0 +1,79 @@
+<div class="map-container">
+  <!-- Imagen de fondo  -->
+
+
+  <!-- SVG del mapa -->
+  <svg viewBox="0 0 1175 746">
+    <g id="territorios">
+      <ng-container *ngFor="let territory of territories">
+        <path
+          [attr.id]="territory.id"
+          [attr.d]="territory.path"
+          [attr.fill]="getTerritoryColor(territory.id)"
+          [attr.stroke]="territory.id === selectedTerritory ? '#333' : '#444'"
+          [attr.stroke-width]="territory.id === selectedTerritory ? '1.5' : '1.1'"
+          class="territory-path"
+          (click)="handleTerritorySelection(territory.id)"
+          (mouseenter)="onTerritoryHover(territory.id, true, $event)"
+          (mouseleave)="onTerritoryHover(territory.id, false, $event)"
+        />
+      </ng-container>
+    </g>
+
+    <g id="conectores">
+      <ng-container *ngFor="let connector of connectors">
+        <path
+          [attr.id]="connector.id"
+          [attr.d]="connector.path"
+          style="stroke: #ff0000; stroke-dasharray: 4,2; fill: none;" />
+      </ng-container>+
+    </g>
+
+    <g id="tropas">
+      <ng-container *ngFor="let troop of troops">
+        <path
+          [attr.id]="troop.id"
+          [attr.d]="troop.path"
+          style="stroke: black; fill: white; cursor: default;"
+        />
+        <text
+          [attr.x]="getTextPosition(troop.path).x"
+          [attr.y]="getTextPosition(troop.path).y"
+          text-anchor="middle"
+          font-size="14"
+          font-weight="bold"
+          fill="black"
+        >
+          {{ getTroopCount(troop) }}
+        </text>
+      </ng-container>
+    </g>
+  </svg>
+
+  <!-- Tooltip -->
+  <div
+    *ngIf="hoveredTerritory && tooltipData"
+    class="territory-tooltip"
+    [style.left.px]="tooltipPosition.x"
+    [style.top.px]="tooltipPosition.y"
+  >
+    <div class="tooltip-content">
+      <div class="tooltip-title">{{ tooltipData.territoryName }}</div>
+      <div class="tooltip-info">
+        <div class="tooltip-row">
+          <span class="tooltip-label">Propietario:</span>
+          <span class="tooltip-value">{{ tooltipData.ownerName || 'Sin propietario' }}</span>
+        </div>
+        <div class="tooltip-row">
+          <span class="tooltip-label">Ejércitos:</span>
+          <span class="tooltip-value">{{ tooltipData.armies }}</span>
+        </div>
+        <div class="tooltip-row">
+          <span class="tooltip-label">Continente:</span>
+          <span class="tooltip-value">{{ tooltipData.continent }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

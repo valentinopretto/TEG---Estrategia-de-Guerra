@@ -1,0 +1,129 @@
+<div class="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center p-4 register-background">
+  
+  <div class="absolute top-8 left-1/2 transform -translate-x-1/2">
+    <h1 class="text-6xl font-bold text-white tracking-widest drop-shadow-lg">
+      T.E.G.
+    </h1>
+  </div>
+
+  <div class="bg-yellow-100 bg-opacity-95 rounded-lg shadow-2xl p-8 max-w-md w-full mt-20">
+    
+    <div class="text-center mb-6">
+      <p class="text-lg text-gray-700 font-medium">¿NO TIENES CUENTA? REGÍSTRATE</p>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-6 tracking-wider">
+      REGISTRARSE
+    </h2>
+
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="space-y-4">
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          NOMBRE DE USUARIO:
+        </label>
+        <input 
+          type="text"
+          name="username"
+          [(ngModel)]="registerData.username"
+          #username="ngModel"
+          required
+          minlength="3"
+          maxlength="20"
+          class="w-full px-4 py-3 bg-yellow-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+          placeholder="Elige tu nombre de usuario"
+          [class.border-red-500]="username.invalid && username.touched"
+          [class.border-green-500]="username.valid && username.touched"
+        />
+        <div *ngIf="username.invalid && username.touched" class="text-red-500 text-xs mt-1">
+          <div *ngIf="username.errors?.['required']">El nombre de usuario es requerido</div>
+          <div *ngIf="username.errors?.['minlength']">Mínimo 3 caracteres</div>
+          <div *ngIf="username.errors?.['maxlength']">Máximo 20 caracteres</div>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          CORREO ELECTRÓNICO:
+        </label>
+        <input 
+          type="email"
+          name="email"
+          [(ngModel)]="registerData.email"
+          #email="ngModel"
+          required
+          email
+          class="w-full px-4 py-3 bg-yellow-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+          placeholder="tu.email@ejemplo.com"
+          [class.border-red-500]="email.invalid && email.touched"
+          [class.border-green-500]="email.valid && email.touched"
+        />
+        <div *ngIf="email.invalid && email.touched" class="text-red-500 text-xs mt-1">
+          <div *ngIf="email.errors?.['required']">El correo electrónico es requerido</div>
+          <div *ngIf="email.errors?.['email']">Ingresa un correo electrónico válido</div>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          CONTRASEÑA:
+        </label>
+        <input 
+          type="password"
+          name="password"
+          [(ngModel)]="registerData.password"
+          #password="ngModel"
+          required
+          minlength="6"
+          class="w-full px-4 py-3 bg-yellow-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+          placeholder="Crea una contraseña segura"
+          [class.border-red-500]="password.invalid && password.touched"
+          [class.border-green-500]="password.valid && password.touched"
+        />
+        <div *ngIf="password.invalid && password.touched" class="text-red-500 text-xs mt-1">
+          <div *ngIf="password.errors?.['required']">La contraseña es requerida</div>
+          <div *ngIf="password.errors?.['minlength']">Mínimo 6 caracteres</div>
+        </div>
+      </div>
+
+      <div class="space-y-3 pt-4">
+        <button 
+          type="submit"
+          [disabled]="registerForm.invalid || isLoading "
+          class="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-3 px-6 rounded-md transition-all duration-200 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed">
+          <span *ngIf="!isLoading">ACEPTAR</span>
+          <span *ngIf="isLoading" class="flex items-center justify-center">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Creando cuenta...
+          </span>
+        </button>
+
+        <button 
+          type="button"
+          (click)="onCancel()"
+          class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-md transition-all duration-200 transform hover:scale-105">
+          CANCELAR
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-6 text-center border-t pt-4">
+      <p class="text-gray-600 text-sm mb-2">¿Ya tienes cuenta?</p>
+      <button 
+        (click)="goToLogin()"
+        class="text-green-600 hover:text-green-800 font-semibold underline transition-colors duration-200">
+        INICIA SESIÓN AQUÍ
+      </button>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-8 opacity-20">
+    <div class="w-16 h-16 bg-white rounded-lg shadow-lg transform rotate-12"></div>
+  </div>
+  <div class="absolute bottom-16 right-12 opacity-20">
+    <div class="w-12 h-12 bg-red-500 rounded-lg shadow-lg transform -rotate-12"></div>
+  </div>
+</div>

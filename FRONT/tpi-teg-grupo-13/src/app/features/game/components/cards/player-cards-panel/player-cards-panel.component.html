@@ -1,0 +1,37 @@
+<div class="player-cards-panel-wrapper">
+  <!-- Info de cartas -->
+  <div class="cards-info">
+    <span>{{ playerCards.length }}/{{ maxCards }} cartas</span>
+    <span style="margin-left: 15px;">{{ selectedCards.length }} seleccionadas</span>
+  </div>
+
+  <!-- Botón de canje -->
+  <div class="trade-button-container">
+    <button
+      class="trade-button"
+      [ngClass]="{
+        'mandatory': mustTrade,
+        'loading': isTrading
+      }"
+      [disabled]="!canTrade || isTrading"
+      (click)="attemptTrade()">
+      {{ isTrading ? 'CANJEANDO...' : (mustTrade ? '¡CANJEAR AHORA!' : 'CANJEAR CARTAS') }}
+    </button>
+  </div>
+
+  <!-- Contenedor de cartas -->
+  <div class="cards-container">
+    <app-card-display
+      *ngFor="let card of playerCards"
+      [card]="card"
+      [isSelected]="isCardSelected(card)"
+      [canSelect]="canSelectCards"
+      (cardSelected)="onCardSelected($event)">
+    </app-card-display>
+  </div>
+
+  <!-- Mensaje de feedback -->
+  <div class="feedback-message">
+    {{ feedbackMessage }}
+  </div>
+</div>

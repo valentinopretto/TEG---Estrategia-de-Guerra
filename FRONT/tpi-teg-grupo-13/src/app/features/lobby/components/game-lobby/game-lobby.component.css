@@ -1,0 +1,224 @@
+.game-lobby-container {
+  background-image:  linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5)), url('/images/teg-map-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efectos de partículas de fondo */
+.game-lobby-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.08) 0%, transparent 50%);
+  animation: particles 20s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes particles {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-10px) rotate(2deg); }
+}
+
+/* Efectos mortales para el botón de logout */
+.absolute .bg-red-600 {
+  position: relative;
+  overflow: hidden;
+  transform: perspective(1000px) rotateY(0deg);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid transparent;
+}
+
+.absolute .bg-red-600::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.absolute .bg-red-600:hover {
+  transform: perspective(1000px) rotateY(-8deg) scale(1.05);
+  box-shadow:
+    0 10px 30px rgba(239, 68, 68, 0.4),
+    0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.absolute .bg-red-600:hover::before {
+  left: 100%;
+}
+
+/* Efectos para el título T.E.G. */
+/*h1 {*/
+/*  text-shadow:*/
+/*    0 0 10px rgba(255, 255, 255, 0.8),*/
+/*    0 0 20px rgba(255, 255, 255, 0.6),*/
+/*    0 0 30px rgba(255, 255, 255, 0.4),*/
+/*    0 0 40px rgba(120, 119, 198, 0.6);*/
+/*  animation: titlePulse 3s ease-in-out infinite alternate;*/
+/*}*/
+
+@keyframes titlePulse {
+  0% {
+    text-shadow:
+      0 0 10px rgba(255, 255, 255, 0.8),
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.4),
+      0 0 40px rgba(120, 119, 198, 0.6);
+  }
+  100% {
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 1),
+      0 0 30px rgba(255, 255, 255, 0.8),
+      0 0 40px rgba(255, 255, 255, 0.6),
+      0 0 50px rgba(120, 119, 198, 0.8);
+  }
+}
+
+/* Efectos MORTALES para los botones principales */
+.flex-col button {
+  position: relative;
+  overflow: hidden;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Efecto de brillo que atraviesa el botón */
+.flex-col button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%) rotate(45deg);
+  transition: transform 0.6s;
+}
+
+/* Borde animado con gradiente de colores */
+.flex-col button::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
+  background-size: 400% 400%;
+  border-radius: inherit;
+  z-index: -1;
+  animation: gradientShift 3s ease infinite;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Estado hover - AQUÍ ESTÁ LA MAGIA */
+.flex-col button:hover {
+  transform: perspective(1000px) rotateX(-10deg) rotateY(5deg) scale(1.08);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.flex-col button:hover::before {
+  transform: translateX(100%) rotate(45deg);
+}
+
+.flex-col button:hover::after {
+  opacity: 1;
+}
+
+/* Estado activo (cuando se hace click) */
+.flex-col button:active {
+  transform: perspective(1000px) rotateX(-5deg) rotateY(2deg) scale(1.02);
+}
+
+/* Efectos específicos para el botón CREAR PARTIDA */
+.bg-\[#f0e0c6\] {
+  background: linear-gradient(135deg, #f0e0c6 0%, #e6d3b1 100%) !important;
+  box-shadow: 0 8px 25px rgba(240, 224, 198, 0.3);
+}
+
+.bg-\[#f0e0c6\]:hover {
+  background: linear-gradient(135deg, #e6d3b1 0%, #dcc89c 100%) !important;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(240, 224, 198, 0.6) !important;
+}
+
+/* Efectos específicos para el botón UNIRSE A PARTIDA */
+.bg-\[#f25d5d\] {
+  background: linear-gradient(135deg, #f25d5d 0%, #d94c4c 100%) !important;
+  box-shadow: 0 8px 25px rgba(242, 93, 93, 0.3);
+}
+
+.bg-\[#f25d5d\]:hover {
+  background: linear-gradient(135deg, #d94c4c 0%, #c73e3e 100%) !important;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(242, 93, 93, 0.6) !important;
+}
+
+/* Efectos para botón deshabilitado */
+.flex-col button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1);
+}
+
+.flex-col button:disabled:hover {
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.flex-col button:disabled::after {
+  opacity: 0 !important;
+}
+
+/* Animación de entrada suave */
+.flex-col {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsivo - efectos más suaves en móviles */
+@media (max-width: 768px) {
+  .flex-col button:hover {
+    transform: perspective(1000px) rotateX(-5deg) rotateY(2deg) scale(1.05);
+  }
+
+  .absolute .bg-red-600:hover {
+    transform: perspective(1000px) rotateY(-4deg) scale(1.03);
+  }
+}

@@ -1,0 +1,21 @@
+
+  <div class="container">
+    @for (dummy of dummies ; track dummy.id) {
+        <div
+          class="dummy-item"
+          [appHighlightDummy]="dummy.type"
+          [ngClass]="{'active': dummy.isActive, 'inactive': !dummy.isActive}"
+        >
+          <p>
+            <span>{{ dummy.isActive ? 'Activo' : 'Desactivo' }}</span>
+            {{ dummy.name | dummyFormatter: dummy.type }}
+          </p>
+          <p>{{ getDummyGreeting(dummy.id,dummy.name) }}</p>
+          <button (click)="toggleStatus(dummy)">
+            {{ dummy.isActive ? 'Desactivar' : 'Activar' }}
+          </button>
+        </div>
+        }
+  </div>
+
+

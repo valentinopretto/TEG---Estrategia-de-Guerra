@@ -1,0 +1,77 @@
+<div class="imagen">
+  <div class="main-container">
+    <button class="back-to-lobby" (click)="backToLobby()">
+      <span class="arrow">←</span> Volver al Lobby
+    </button>
+
+    <div class="join-game-container">
+      <h2>Unirse a partida</h2>
+      <input
+        type="text"
+        [(ngModel)]="codigo"
+        placeholder="Código de juego"
+      />
+      <button (click)="unirseConCodigo()" [disabled]="loading">
+        {{ loading ? 'Uniendo...' : 'Unirse' }}
+      </button>
+      <p class="error" *ngIf="error">{{ error }}</p>
+    </div>
+
+    <div class="partidas-title">
+      <h1>Partidas guardadas</h1>
+    </div>
+
+    <div *ngIf="loading && partidas.length === 0" class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Cargando partidas...</p>
+    </div>
+
+    <div *ngIf="partidas.length === 0 && !loading" class="no-partidas">
+      <div class="text-6xl">🎮</div>
+      <p>No hay partidas guardadas</p>
+      <button (click)="crearNuevaPartida()" class="new-game-button">
+        Crear Nueva Partida
+      </button>
+    </div>
+
+    <div class="partidas-grid" *ngIf="partidas.length > 0">
+      <div
+        *ngFor="let partida of partidas; trackBy: trackByPartidaId"
+        class="partida-card"
+        [ngClass]="{'bg-gray-100': partida.estado === 'finalizada'}"
+      >
+        <div class="partida-info">
+          <div class="partida-info-item">
+            <span class="partida-info-label">📅 Creada:</span>
+            <span class="partida-info-value">{{ formatearFecha(partida.fechaCreacion) }}</span>
+          </div>
+          <div class="partida-info-item">
+            <span class="partida-info-label">🕐 Última jugada:</span>
+            <span class="partida-info-value">{{ formatearFecha(partida.fechaUltimaJugada) }}</span>
+          </div>
+          <div class="partida-info-item">
+            <span class="partida-info-label">👥 Jugadores:</span>
+            <span class="partida-info-value jugadores-list">
+              {{ partida.jugadores?.length ? partida.jugadores.join(', ') : 'Sin jugadores' }}
+            </span>
+          </div>
+          <div class="partida-info-item" *ngIf="partida.estado === 'en_progreso'">
+            <span class="partida-info-label">🎯 Turno actual:</span>
+            <span class="partida-info-value">{{ partida.turnoActual + 1 }}</span>
+          </div>
+        </div>
+
+        <button
+          (click)="continuarPartida(partida.id)"
+          class="jugar-button"
+          [disabled]="loading"
+        >
+          <span>▶️</span>
+          <span>JUGAR</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+*/

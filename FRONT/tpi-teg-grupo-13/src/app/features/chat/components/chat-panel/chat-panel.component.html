@@ -1,0 +1,23 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h4>Chat</h4>
+    <div class="connection-status" [class.connected]="chatState.isConnected">
+      {{ chatState.isConnected ? 'Conectado' : 'Desconectado' }}
+    </div>
+  </div>
+
+  <div class="chat-content" #chatContent (scroll)="onChatScroll($event)">
+    <app-message-list
+      [messages]="chatState.messages"
+      [config]="config"
+      (onFocus)="onFocusChat()">
+    </app-message-list>
+  </div>
+
+  <div class="chat-footer">
+    <app-message-input
+      [maxLength]="config.maxMessageLength"
+      (onSendMessage)="onSendMessage($event)">
+    </app-message-input>
+  </div>
+</div>

@@ -1,0 +1,676 @@
+/* Fondo de pantalla completa con tu imagen personalizada */
+.modal-backdrop {
+  font-family: 'Arial', sans-serif;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url('../../../../../../public/images/fondo-create-game.png'),
+    linear-gradient(#247, #147);
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  color: white;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-content {
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Overlay oscuro para mejorar legibilidad */
+.modal-backdrop::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+
+/* Decoraciones de fichas en el fondo con colores de T.E.G. */
+.modal-backdrop::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(240, 224, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(242, 93, 93, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(100, 150, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 90% 10%, rgba(255, 215, 0, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+  animation: particles 15s ease-in-out infinite alternate;
+}
+
+@keyframes particles {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-10px) rotate(2deg); }
+}
+
+/* Contenedor principal - ahora ocupa toda la pantalla */
+
+.modal-content {
+  max-height: 100vh;
+  overflow: auto;
+}
+
+/* Título del código de partida con efectos T.E.G. */
+h2 {
+  font-size: 24px;
+  margin: 0;
+  color: #e0e0e0;
+  font-weight: 300;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.game-code {
+  font-weight: bold;
+  color: #fff;
+  font-size: 32px;
+  text-shadow:
+    0 0 15px rgba(240, 224, 198, 0.8),
+    0 0 25px rgba(240, 224, 198, 0.6),
+    0 0 35px rgba(240, 224, 198, 0.4);
+  animation: codeGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes codeGlow {
+  0% {
+    text-shadow:
+      0 0 15px rgba(240, 224, 198, 0.8),
+      0 0 25px rgba(240, 224, 198, 0.6),
+      0 0 35px rgba(240, 224, 198, 0.4);
+  }
+  100% {
+    text-shadow:
+      0 0 20px rgba(240, 224, 198, 1),
+      0 0 30px rgba(240, 224, 198, 0.8),
+      0 0 40px rgba(240, 224, 198, 0.6);
+  }
+}
+
+/* Contador de jugadores */
+.player-counter {
+  margin: 20px 0;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.player-counter h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #e0e0e0;
+  font-weight: 400;
+}
+
+/* Contenedor de avatares de jugadores */
+.player-avatars {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+/* Cajas de jugadores individuales con efectos brutales */
+.player-box {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, rgba(240, 224, 198, 0.15), rgba(230, 211, 177, 0.15));
+  border: 2px solid rgba(240, 224, 198, 0.4);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: white;
+  backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.player-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.player-box:hover {
+  background: linear-gradient(135deg, rgba(240, 224, 198, 0.25), rgba(230, 211, 177, 0.25));
+  transform: translateY(-5px) scale(1.05);
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(240, 224, 198, 0.3);
+  border-color: rgba(240, 224, 198, 0.6);
+}
+
+.player-box:hover::before {
+  left: 100%;
+}
+
+.player-box.empty-slot {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  opacity: 0.7;
+}
+
+.player-box.empty-slot:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: none;
+}
+
+.player-info {
+  text-align: center;
+  width: 100%;
+}
+
+.player-name {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 5px;
+  word-wrap: break-word;
+  line-height: 1.2;
+}
+
+.player-status {
+  font-size: 11px;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* Contenedor de configuraciones */
+.settings {
+  max-width: 600px;
+  width: 100%;
+}
+
+/* Items individuales de configuración con efectos T.E.G. */
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, rgba(139, 119, 101, 0.9), rgba(120, 100, 80, 0.9));
+  padding: 15px 25px;
+  border-radius: 25px;
+  min-height: 50px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(240, 224, 198, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.setting-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(240, 224, 198, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.setting-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(240, 224, 198, 0.4);
+}
+
+.setting-item:hover::before {
+  left: 100%;
+}
+
+.setting-item label {
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: uppercase;
+  flex: 1;
+  text-align: left;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Botones de incremento/decremento con efectos mortales */
+.setting-item button {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  border: 2px solid rgba(240, 224, 198, 0.3);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.setting-item button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%) rotate(45deg);
+  transition: transform 0.5s;
+}
+
+.setting-item button:hover {
+  background: linear-gradient(135deg, rgba(240, 224, 198, 0.3), rgba(230, 211, 177, 0.3));
+  transform: scale(1.15);
+  border-color: rgba(240, 224, 198, 0.6);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.setting-item button:hover::before {
+  transform: translateX(100%) rotate(45deg);
+}
+
+/* Contenedor de controles para alinear botones e ícono */
+.setting-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Valores numéricos entre botones */
+.setting-item span {
+  margin: 0 15px;
+  font-weight: bold;
+  color: white;
+  min-width: 80px;
+  font-size: 16px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Ícono de información con efectos */
+.info-icon {
+  position: relative;
+  cursor: help;
+}
+
+.info-icon i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.8), rgba(54, 124, 206, 0.8));
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  font-style: normal;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.info-icon:hover i {
+  background: linear-gradient(135deg, rgba(74, 144, 226, 1), rgba(54, 124, 206, 1));
+  transform: scale(1.2);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.5);
+}
+
+/* Tooltip personalizado mejorado */
+.info-icon::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.95));
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  max-width: 280px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.4;
+  border: 1px solid rgba(240, 224, 198, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.info-icon::before {
+  content: '';
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(0, 0, 0, 0.95);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.info-icon:hover::after,
+.info-icon:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Checkbox personalizado */
+.setting-item input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  accent-color: #78c850;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.setting-item input[type="checkbox"]:hover {
+  transform: scale(1.1);
+}
+
+/* Select personalizado */
+.setting-item select {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  border: 2px solid rgba(240, 224, 198, 0.3);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 140px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.setting-item select:hover {
+  border-color: rgba(240, 224, 198, 0.6);
+  background: linear-gradient(135deg, rgba(240, 224, 198, 0.1), rgba(230, 211, 177, 0.1));
+}
+
+.setting-item select option {
+  background: #2c3e50;
+  color: white;
+}
+
+/* Contenedor de botones finales */
+.modal-actions {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+/* Botón Jugar con efectos T.E.G. */
+.start-button {
+  background: linear-gradient(135deg, #8bc34a, #689f38);
+  border: none;
+  color: white;
+  padding: 20px 60px;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 8px 25px rgba(139, 195, 74, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.start-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.start-button:hover {
+  background: linear-gradient(135deg, #9ccc65, #7cb342);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 15px 35px rgba(139, 195, 74, 0.6),
+    0 0 25px rgba(139, 195, 74, 0.3);
+}
+
+.start-button:hover::before {
+  left: 100%;
+}
+
+/* Botón Salir con efectos T.E.G. */
+.exit-button {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  border: none;
+  color: white;
+  padding: 20px 60px;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.exit-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.exit-button:hover {
+  background: linear-gradient(135deg, #ef5350, #c62828);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 15px 35px rgba(244, 67, 54, 0.6),
+    0 0 25px rgba(244, 67, 54, 0.3);
+}
+
+.exit-button:hover::before {
+  left: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 30px 20px;
+    gap: 25px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .game-code {
+    font-size: 26px;
+  }
+
+  .player-avatars {
+    gap: 15px;
+  }
+
+  .player-box {
+    width: 80px;
+    height: 80px;
+    font-size: 12px;
+  }
+
+  .setting-item {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .setting-item label {
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .setting-controls {
+    justify-content: center;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .start-button,
+  .exit-button {
+    width: 100%;
+    max-width: 300px;
+    font-size: 18px;
+    padding: 16px 40px;
+  }
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+
+  .back-to-lobby {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+  }
+
+  .back-to-lobby:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(239, 68, 68, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+
+  .back-to-lobby .arrow {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .back-to-lobby:hover .arrow {
+    transform: translateX(-4px);
+  }
+}
+
+/* Indicador de modo join */
+.join-mode-indicator {
+  background: rgba(255, 193, 7, 0.2);
+  border: 2px solid rgba(255, 193, 7, 0.5);
+  border-radius: 12px;
+  padding: 15px 25px;
+  margin: 20px 0;
+  max-width: 600px;
+  width: 100%;
+}
+
+.join-mode-indicator p {
+  color: #ffc107;
+  font-weight: 500;
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Estilos para elementos deshabilitados */
+.setting-item button:disabled {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.setting-item button:disabled:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: none;
+}
+
+.setting-item input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.setting-item select:disabled {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+}
+
+.setting-item select:disabled option {
+  background: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.3);
+}

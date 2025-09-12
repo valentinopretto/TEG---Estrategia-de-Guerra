@@ -1,0 +1,11 @@
+// In-game action type enums
+export enum ActionType {
+  PLACE_TROOPS = 'PLACE_TROOPS',
+  ATTACK = 'ATTACK',
+  MOVE_TROOPS = 'MOVE_TROOPS',
+  TRADE_CARDS = 'TRADE_CARDS',
+  END_PHASE = 'END_PHASE',
+  END_TURN = 'END_TURN',
+  LEAVE_GAME = 'LEAVE_GAME',
+  PAUSE_GAME = 'PAUSE_GAME'
+}

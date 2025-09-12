@@ -1,0 +1,71 @@
+<div *ngIf="isVisible" class="victory-overlay" [@fadeIn]>
+
+  <!-- Contenedor principal -->
+  <div class="victory-container" [@slideUp]>
+
+    <!-- Contenido principal -->
+    <div class="victory-content">
+
+      <!-- Título -->
+      <div class="victory-title" [@bounceIn]>
+        <h1>¡VICTORIA!</h1>
+        <div class="victory-underline"></div>
+      </div>
+
+      <!-- Trofeo -->
+      <div class="trophy-section" [@trophyBounce]>
+        <div class="trophy-container">
+          <div class="trophy-rays"></div>
+          <div class="trophy-glow"></div>
+          <div class="trophy-main">🏆</div>
+
+          <div *ngIf="!showTrophyImage" class="trophy-main" [@trophyGlow]>
+            🏆
+          </div>
+        </div>
+      </div>
+
+      <!-- Ganador -->
+      <div class="winner-section" [@slideUp]>
+        <p class="winner-label">El ganador es:</p>
+        <h2 class="winner-name">{{ winnerName }}</h2>
+
+      </div>
+
+      <!-- Estadísticas -->
+      <div *ngIf="showStats" class="stats-section" [@fadeIn]>
+        <h3 class="stats-title">Estadísticas de la Partida</h3>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value players">{{ totalPlayers }}</div>
+            <div class="stat-label">Jugadores</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value duration">{{ gameDuration }}</div>
+            <div class="stat-label">Duración</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value turns">{{ totalTurns }}</div>
+            <div class="stat-label">Turnos</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="action-buttons">
+        <button (click)="onBackToLobby()" class="action-btn btn-lobby">
+          Volver al Lobby
+        </button>
+
+        <button *ngIf="showPlayAgainButton"
+                (click)="onPlayAgain()"
+                class="action-btn btn-play-again">
+          Jugar de Nuevo
+        </button>
+      </div>
+    </div>
+
+      <!-- Confetti animado -->
+    <div #confettiContainer id="confetti" class="confetti-container"></div>
+  </div>
+</div>
