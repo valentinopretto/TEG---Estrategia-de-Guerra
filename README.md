@@ -17,7 +17,8 @@ El juego permite conquistar territorios, organizar ejércitos y cumplir objetivo
 - Sistema de batallas basado en dados.  
 - Objetivos secretos y condiciones de victoria.  
 - Interfaz web intuitiva desarrollada con Angular.  
-- API REST con Spring Boot conectada a MySQL.  
+- API REST con Spring Boot conectada a MySQL.
+- Implementacion de Bots: Novato - Balanceado - Experto
 
 ---
 
