@@ -7,7 +7,7 @@ El juego permite conquistar territorios, organizar ejércitos y cumplir objetivo
 
 ## 🚀 Tecnologías utilizadas
 - **Frontend:** Angular  
-- **Backend:** Spring Boot  
+- **Backend:** Java - Spring Boot  
 - **Base de datos:** MySQL  
 
 ---
@@ -18,7 +18,7 @@ El juego permite conquistar territorios, organizar ejércitos y cumplir objetivo
 - Objetivos secretos y condiciones de victoria.  
 - Interfaz web intuitiva desarrollada con Angular.  
 - API REST con Spring Boot conectada a MySQL.
-- Implementacion de Bots: Novato - Balanceado - Experto
+- Implementacion de Bots: Novato - Balanceado - Experto (bot ataca presionando F5 en su turno)
 
 ---
 
@@ -27,8 +27,7 @@ El juego permite conquistar territorios, organizar ejércitos y cumplir objetivo
 ### 🔧 Backend (Spring Boot)
 1. Clonar el repositorio.  
 2. Importar el proyecto en tu IDE favorito (IntelliJ, Eclipse, etc.).  
-3. Configurar conexión a MySQL en `application.properties`.  
-4. Ejecutar la aplicación Spring Boot.  
+3. Ejecutar la aplicación Spring Boot.  
 
 ### 💻 Frontend (Angular)
 1. Entrar a la carpeta del frontend.  
